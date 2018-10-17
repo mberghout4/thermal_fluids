@@ -19,15 +19,19 @@ halfMeterPixels = 859-312; % Height of pixels for 0.5 meters = pixel of first ta
 
 
 %Create matrix to store values for each pictures
-for i=1 : 1
+for i=1 : 15
     h       = figure;
     folder  = strcat(num2str(i), '_C001H001S0001\');
     directoryTemp = dir([path folder '*.tif']);
     thresh  = 100; 
-    for j=1 :2: size(directoryTemp)    
+    for j=20 :2: size(directoryTemp)    
         temp = [path folder directoryTemp(j).name];
         pic1 = imread(temp);
-        pic1 = (backdrop - pic1) < thresh;
+        pic1 = (backdrop - pic1) > thresh;
+        [row, column] = find(pic1 > 0);
+        temp = min(row)
+       %imshow(pic1);
+
         
         
         %imshow(pic1);
