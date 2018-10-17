@@ -16,28 +16,33 @@ meterStick          = backdrop - meterStick;
 %                                  bottom of second tape is at row 859;
 
 halfMeterPixels = 859-312; % Height of pixels for 0.5 meters = pixel of first tape - pixel of second tape;
-
+posData(1).time(1) = 0;
+posData(1).pos(1) = 0;
 
 
 %Create matrix to store values for each pictures
-for i=1 : 1
+for i=1 : 1 % i is the ball number
     h       = figure;
     folder  = strcat(num2str(i), '_C001H001S0001\');
     directoryTemp = dir([path folder '*.tif']);
     thresh  = 100; 
-    for j=1 :2: size(directoryTemp)    
+    for j=1 :1: size(directoryTemp) % j is the frame number    
         temp = [path folder directoryTemp(j).name];
         pic1 = imread(temp);
         pic1 = (backdrop - pic1) > thresh;
         [row, column] = find(pic1 > 0);
-        temp = min(row);
+        temp = 0;
+        if min(row)
+            temp = min(row);
+        end %if
         %imshow(pic1);
+       posData(i).time(j) = (j-1)/1000;
+       posData(i).pos(j) = temp;
 
-        
-        
-        %imshow(pic1);
     end%for
 end%for 
 
+
+plot(posData(1).time(:), posData(1).pos(:));
 
 
