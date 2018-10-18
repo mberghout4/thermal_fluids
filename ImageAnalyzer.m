@@ -64,6 +64,25 @@ for i=1 : 15 % i is the ball number
     savefig(h,"Ball" + string(i));
 
     close(j); close (h);
+
+    open("Ball"+string(i));
+    h = gfc;
+    axesObjs = get(h, 'Children');
+    dataObjs = get(axesObjs, 'Children');
+    timeData = get(dataObjs, 'XData');
+    posData  = get(dataObjs, 'YData');
+
+    [fitObj, gof] = fit(timeData,posData,'poly1');
+    velData  = differentiate(fitObj, timeData);
+
+    close(h);
+    h = figure;
+    plot(timeData,velData);
+    xlabel('Time [s]');
+    ylabel('Velocity [m/s]');
+
+    input();
+    close(h);
 end%for 
 
 
