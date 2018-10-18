@@ -21,6 +21,13 @@ pixel2Meter = .5/halfMeterPixels; %m
 posData(1).time(1) = 0;
 posData(1).pos(1) = 0;
 
+velocity = zeros(15,1);
+
+% CONSTANTS FOR CALCS
+g = 9.81; % [m/s] -acceleration due to gravity
+m = []; % [g] - mass of each ping pong ball
+d = []; % [mm] - diameter of each ping pong ball
+
 
 %Create matrix to store values for each pictures
 for i=1 : 15 % i is the ball number
@@ -64,7 +71,7 @@ for i=1 : 15 % i is the ball number
 %     savefig(h,"Ball" + string(i));
 % 
 %     close(j); close (h);
-
+    % Take a derivative of the position data to get velocity and plot it.
     open("Ball" + string(i) + ".fig");
     h = gcf;
     axesObjs = get(h, 'Children');
@@ -82,8 +89,12 @@ for i=1 : 15 % i is the ball number
     ylabel('Velocity [m/s]');
     title("Ball" + i)
     savefig(h,"Ball" + string(i) + "Velocity");
-
     close(h);
+
+    velocity(i) = velData(1);
+
+    % Cd = 2Fd/p/V^2/A
+
 end%for 
 
 
