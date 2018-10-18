@@ -25,7 +25,8 @@ velocity = zeros(15,1);
 Cd = zeros(15,1);
 
 % CONSTANTS FOR CALCS
-g = 9.81; % [m/s] -acceleration due to gravity
+g = 9.81;  % [m/s] -acceleration due to gravity
+p = 1.184; %[kg/m^3] - density of air at 25 C
 m = [2 2 2.4 2.6 1.9 2.3 2.4 2.3 2 2.1 2.6 2.4 2.2 2.3 1.9]; % [g] - mass of each ping pong ball
 d = [39.23 39.27 39.42 39.05 38.78 39.05 39.55 39.73 39.78 39.29 39.65 39.29 39.42 39.4 39.3]; % [mm] - diameter of each ping pong ball
 
