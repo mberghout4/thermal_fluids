@@ -21,24 +21,41 @@ posData(1).pos(1) = 0;
 
 
 %Create matrix to store values for each pictures
-for i=1 : 1
+for i=1 : 1 % i is the ball number
     h       = figure;
     folder  = strcat(num2str(i), '_C001H001S0001\');
     directoryTemp = dir([path folder '*.tif']);
     thresh  = 100; 
-    for j=1 :1: size(directoryTemp)    
-
+    for j=1 :1: size(directoryTemp) % j is the frame number    
         temp = [path folder directoryTemp(j).name];
         pic1 = imread(temp);
         pic1 = (backdrop - pic1) > thresh;
         [row, column] = find(pic1 > 0);
-        temp = min(row);
+        temp = 0;
+        if min(row)
+            temp = min(row);
+        end %if
         %imshow(pic1);
        posData(i).time(j) = (j-1)/1000;
        posData(i).pos(j) = temp;
 
+      
     end%for
+     plot(posData(1).time(:), posData(1).pos(:));
+    [xi, yi] = ginput(2);
+    indx = find((posData(1).time(:) > xi(1)) .* (posData(1).time(:) < xi(2)));
+    
+     h = figure;
+     plot((posData(1).time(indx) - posData(1).time(indx(1))), posData(1).pos(indx));
+     
+    savefig(h,['Ball' string(i)]);
+        
 end%for 
+
+
+
+
+
 
 
 
