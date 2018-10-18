@@ -22,6 +22,7 @@ posData(1).time(1) = 0;
 posData(1).pos(1) = 0;
 
 velocity = zeros(15,1);
+Cd = zeros(15,1);
 
 % CONSTANTS FOR CALCS
 g = 9.81; % [m/s] -acceleration due to gravity
@@ -94,6 +95,10 @@ for i=1 : 15 % i is the ball number
     velocity(i) = velData(1);
 
     % Cd = 2Fd/p/V^2/A
+    Fd     = m(i)/1000.0*g;
+    A      = pi/4.0*(d(i)/1000)^2;
+    Cd(i)  = 2*Fd/p/velocity(i)^2/A;
+
 
 end%for 
 
