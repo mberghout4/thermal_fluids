@@ -4,7 +4,7 @@ path = '';
 if ispc
     path            = 'E:\Lab_5\images\';
 elseif ismac
-    path            = 'D:\Thermal_Fluids_Lab\Lab_5\images\';
+    path            = '/Users/mattberghout/Desktop/Matt School/Matt USU/Fall_18/Fluids:Thermal Lab(MAE-4400)/Lab/Lab_5/images';
 end
     
 %Create image for the backdrop
