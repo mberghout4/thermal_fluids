@@ -1,9 +1,9 @@
 clc; clear all; close all;
 
 path = '';
-if computer == 'PCWIN64'
+if ispc
     path            = 'E:\Lab_5\images\';
-elseif computer == 'MACI64'
+elseif ismac
     path            = 'D:\Thermal_Fluids_Lab\Lab_5\images\';
 end
     
