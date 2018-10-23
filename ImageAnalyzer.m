@@ -4,17 +4,25 @@ path = '';
 if ispc
     path            = 'E:\Lab_5\images\';
 elseif ismac
-    path            = '/Users/mattberghout/Desktop/Matt School/Matt USU/Fall_18/Fluids:Thermal Lab(MAE-4400)/Lab/Lab_5/images';
+    path            = '/Users/mattberghout/Desktop/Matt School/Matt USU/Fall_18/Fluids:Thermal Lab(MAE-4400)/Lab/Lab_5/images/';
 end
     
 %Create image for the backdrop
-backdropFolder      = 'Backdrop_C001H001S0001\';
+if ispc
+    backdropFolder      = 'Backdrop_C001H001S0001\';
+elseif ismac
+    backdropFolder      = 'Backdrop_C001H001S0001/';
+end
 directoryBackdrop   = dir([path backdropFolder '*.tif']);
 backdrop            = imread([path backdropFolder directoryBackdrop(1).name]);
 
 %Create image for the meter stick
-meterStickFolder    = 'Meter Stick_C001H001S0001\';
-directoryMeterStick = dir([path meterStickFolder '\*.tif']);
+if ispc
+    meterStickFolder    = 'Meter Stick_C001H001S0001\';
+elseif ismac
+    meterStickFolder    = 'Meter Stick_C001H001S0001/';
+end
+directoryMeterStick = dir([path meterStickFolder '*.tif']);
 meterStick          = imread([path meterStickFolder directoryMeterStick(1).name]);
 meterStick          = backdrop - meterStick;
 %Upon visual analysis of meterStick file, bottom of first  tape is at row 312
@@ -30,6 +38,7 @@ posData(1).time(1) = 0;
 posData(1).pos(1) = 0;
 
 velocity = zeros(15,1);
+U_v = zeros(15,1);
 Cd = zeros(15,1);
 
 % CONSTANTS FOR CALCS
@@ -91,17 +100,27 @@ for i=1 : 15 % i is the ball number
 
     [fitObj, gof] = fit(timeData',posData','poly1');
     velData  = differentiate(fitObj, timeData);
-
+    c = confint(fitObj);
+    U_v(i) = abs(velData(1) - c(1,1));
+    upperBound = velData + U_v(i);
+    lowerBound = velData - U_v(i);
+    
     close(h);
     h = figure;
+    hold on
     plot(timeData,velData);
+    plot(timeData,upperBound,'--r')
+    plot(timeData,lowerBound,'--r')
+    legend('Velocity','Confidence Interval')
     xlabel('Time [s]');
     ylabel('Velocity [m/s]');
+    ylim([5 6]);
     title("Ball" + i)
     savefig(h,"Ball" + string(i) + "Velocity");
     close(h);
 
     velocity(i) = velData(1);
+    
 
     % Cd = 2Fd/p/V^2/A
     Fd     = m(i)/1000.0*g;
