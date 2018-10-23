@@ -1,10 +1,15 @@
 clc; clear all; close all;
 
-path                = 'E:\Lab_5\images\';
-
+path = '';
+if computer == 'PCWIN64'
+    path            = 'E:\Lab_5\images\';
+elseif computer == 'MACI64'
+    path            = 'D:\Thermal_Fluids_Lab\Lab_5\images\';
+end
+    
 %Create image for the backdrop
 backdropFolder      = 'Backdrop_C001H001S0001\';
-directoryBackdrop   = dir([path backdropFolder '\*.tif']);
+directoryBackdrop   = dir([path backdropFolder '*.tif']);
 backdrop            = imread([path backdropFolder directoryBackdrop(1).name]);
 
 %Create image for the meter stick
@@ -14,6 +19,9 @@ meterStick          = imread([path meterStickFolder directoryMeterStick(1).name]
 meterStick          = backdrop - meterStick;
 %Upon visual analysis of meterStick file, bottom of first  tape is at row 312
 %                                  bottom of second tape is at row 859;
+%[col, row] = ginput(2);
+%halfMeterPixels = abs(row(1) - row(2));
+%fprintf('%d\n',halfMeterPixels);
 
 halfMeterPixels = 859-312; % Height of pixels for 0.5 meters = pixel of first tape - pixel of second tape;
 pixel2Meter = .5/halfMeterPixels; %m
