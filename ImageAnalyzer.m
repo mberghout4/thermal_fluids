@@ -116,7 +116,7 @@ for i=1 : 15 % i is the ball number
     ylabel('Velocity [m/s]');
     ylim([5 6]);
     title("Ball" + i)
-    savefig(h,"Ball" + string(i) + "Velocity");
+    %savefig(h,"Ball" + string(i) + "Velocity");
     close(h);
 
     velocity(i) = velData(1);
